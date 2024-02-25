@@ -36,7 +36,8 @@ public class UserServiceImpl implements UserService {
         update.setName(user.getName());
         update.setEmail(user.getEmail());
         update.setAbout(user.getAbout());
-        return null;
+        Users  saved = userRepository.save(update);
+        return saved;
     }
 
     @Override
