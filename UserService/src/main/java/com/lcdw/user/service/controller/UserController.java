@@ -20,7 +20,7 @@ public class UserController {
     @PostMapping("/save")
     public ResponseEntity<Users> addUsers(@RequestBody Users users) {
         String id = UUID.randomUUID().toString();
-        users.setUserId(id);
+
         Users saveUser = userService.saveUser(users);
         return new ResponseEntity<Users>(saveUser, HttpStatus.OK);
     }
