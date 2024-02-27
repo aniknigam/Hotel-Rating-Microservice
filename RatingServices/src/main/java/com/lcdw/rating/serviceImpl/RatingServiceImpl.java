@@ -27,7 +27,7 @@ public class RatingServiceImpl implements RatingService {
     public List<Rating> listOfRatingByUserId(String userId) {
 
         List<Rating> rating  = ratingRespository.findByUserId(userId);
-        System.out.println(rating);
+        System.out.println(rating.toString());
         return ratingRespository.findByUserId(userId);
     }
 
