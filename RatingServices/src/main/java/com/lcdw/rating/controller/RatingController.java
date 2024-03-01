@@ -25,8 +25,8 @@ public class RatingController {
     }
 
     @GetMapping("/user/{userId}")
-    public List<Rating> getRatingsByUserId(@PathVariable String userId) {
-        System.out.println("this is userid" + userId);
+    public List<Rating> getRatingsByUserId(@PathVariable("userId") String userId) {
+        System.out.println("this is userid:  " + userId);
         return ratingservice.listOfRatingByUserId(userId);
     }
 

@@ -1,12 +1,16 @@
 package com.lcdw.user.service.serviceImpl;
 
+import com.lcdw.user.service.entities.Ratings;
 import com.lcdw.user.service.entities.Users;
 import com.lcdw.user.service.excepiton.ResourceNotFoundException;
 import com.lcdw.user.service.repository.UserRepository;
 import com.lcdw.user.service.service.UserService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -14,6 +18,11 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private RestTemplate restTemplate;
+
+
 
     @Override
     public Users saveUser(Users usrs) {
@@ -27,7 +36,14 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Users getUser(String uId) {
-        return userRepository.findById(uId).orElseThrow(() -> new ResourceNotFoundException("User with id not found"));
+        //rating url
+        //http://localhost:8084/ratings/user/uid
+        ArrayList<Ratings> data = restTemplate.getForObject("http://localhost:8084/ratings/user/"+uId, ArrayList.class);
+        System.out.println(data);
+        Users user =  userRepository.findById(uId).orElseThrow(() -> new ResourceNotFoundException("User with id not found"));
+        user.setRatings(data);
+
+        return user;
     }
 
     @Override
